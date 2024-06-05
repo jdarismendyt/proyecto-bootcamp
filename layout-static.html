@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Dashboard - SB Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <script src="backend/script.js"></script>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- barra superior-->
+        <a class="navbar-brand ps-3" href="index.html">BOOT CAMP </a>
+        <!-- tres puntos barra lateral-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+    </nav>
+
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">INICIO</div>
+                        <a class="nav-link" href="info.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            INFORMACION DEL DATA SET 
+                        </a>
+                        <div class="sb-sidenav-menu-heading">DATOS</div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Analisis
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="cargardatos.html">CARGA DE DATOS</a>
+                                <a class="nav-link" href="layout-static.html">VISUALIZACION</a>
+                                <a class="nav-link" href="universidad_nacional_output.html" target="_blank">ANÁLISIS TOPOLOGICO</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    Start Bootstrap
+                </div>
+            </nav>
+        </div>
+
+        
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Dashboard</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">4. Presentación de resultados del Análisis.</li>
+                    </ol>
+                <!-- Visualización de predicciones -->
+                <div id="grafica"></div> <!-- Elemento donde se insertará la gráfica -->
+                <div id="botonDescarga"></div> <!-- Elemento donde se insertará el botón de descarga --> 
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <h3>Integrantes del taller</h3>
+                    <ul>
+                        <hr> <!-- Línea horizontal -->
+                        <li>Diomedes Igua Hernandez <a href="mailto:diomedessistemas@gmail.com">diomedessistemas@gmail.com</a> | 3005591602</li>
+                        <li>Jeison Ricardo Patiño Lopez <a href="mailto:pat.jeison@gmail.com">pat.jeison@gmail.com</a> | 3219934351</li>
+                        <li>José Daniel Arismendy Tibaduiza <a href="mailto:julianpati8@gmail.com">julianpati8@gmail.com</a> | 3053654740</li>
+                        <li>Diana Bermúdez Carrillo <a href="mailto:diana.bermudez08@gmail.com">diana.bermudez08@gmail.com</a> | 3114828560</li>
+                    </ul> 
+                    <div class="mintic-talentotech">
+                        <p>MINTIC - TalentoTech 2024</p>
+                        <p>Instructor - Jose Albeiro Montes</p>
+                    </div>
+                </div>
+                
+            </footer>
+        </div>
+    </div> 
+    <script>
+        // Recuperar los datos del almacenamiento local
+        var csvData = localStorage.getItem('csvData');
+        var graphData = JSON.parse(localStorage.getItem('graphData'));
+    
+        // Renderizar la gráfica
+        var conteoData = graphData;
+        var labels = Object.keys(conteoData);
+        var values = Object.values(conteoData);
+    
+        var dataPlotly = [{
+            labels: labels,
+            values: values,
+            type: 'pie'
+        }];
+    
+        var layout = {
+            title: 'Conteo de predicciones'
+        };
+    
+        Plotly.newPlot('grafica', dataPlotly, layout);
+    
+        // Crear una función para descargar el archivo CSV
+        function descargarCSV() {
+            // Crear un objeto Blob con los datos del archivo CSV
+            var blob = new Blob([csvData], { type: 'text/csv' });
+            // Crear un enlace temporal para descargar el archivo
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'predictions.csv';
+            // Hacer clic en el enlace para iniciar la descarga
+            a.click();
+            // Liberar el objeto URL después de la descarga
+            window.URL.revokeObjectURL(url);
+        }
+    
+        // Crear el botón de descarga
+        var botonDescarga = document.createElement('button');
+        botonDescarga.innerHTML = 'Descargar archivo CSV';
+        botonDescarga.addEventListener('click', descargarCSV);
+    
+        // Agregar el botón de descarga al elemento correspondiente
+        var contenedorBoton = document.getElementById('botonDescarga');
+        contenedorBoton.appendChild(botonDescarga);
+    
+        // Limpiar el almacenamiento local después de usar los datos
+        localStorage.removeItem('csvData');
+        localStorage.removeItem('graphData');
+    </script>       
+</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+</html>

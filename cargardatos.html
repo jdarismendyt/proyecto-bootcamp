@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Bienvenido</title>
+    <link href="css/styles.css" rel="stylesheet" />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src=backend/script.js></script>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    
+</head>
+<body>
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- barra superior-->
+        <a class="navbar-brand ps-3" href="index.html">BOOT CAMP </a>
+        <!-- tres puntos barra lateral-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+    </nav>
+
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">INICIO</div>
+                        <a class="nav-link" href="info.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            INFORMACION DEL DATA SET 
+                        </a>
+                        <div class="sb-sidenav-menu-heading">DATOS</div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Analisis
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="cargardatos.html">CARGA DE DATOS</a>
+                                <a class="nav-link" href="layout-static.html">VISUALIZACION</a>
+                                <a class="nav-link" href="universidad_nacional_output.html" target="_blank">ANÁLISIS TOPOLOGICO</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    Start Bootstrap
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Este aplicativo te permite cargar datos y realizar análisis utilizando diferentes técnicas.</h1>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mx-auto my-auto">
+                                <div class="card-body">
+                                    <h5 class="card-title">Carga de datos</h5>
+                                    <img src="images/analisis.png" class="img-thumbnail custom-size1">
+                                    <p class="card-text">carga los datos limpios con las variables ...</p>
+                                    <div class="linea-horizontal"></div>
+                                    <label for="file-upload" class="btn btn-primary">Seleccionar Archivo</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mx-auto my-auto">
+                                <div class="card-body">
+                                    <p class="card-text"><strong>2. Seleccione Una técnica para analizar los datos:</strong></p>
+                                    <div class="form-check">
+                                        <input class="form-check-input tecnica" type="radio" name="tecnica" value="Red Neuronal" id="tecnica1">
+                                        <label class="form-check-label" for="tecnica1">
+                                          Red Neuronal
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input tecnica" type="radio" name="tecnica" value="SVM" id="tecnica2">
+                                        <label class="form-check-label" for="tecnica2">
+                                          SVM
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input tecnica" type="radio" name="tecnica" value="Regresión" id="tecnica3">
+                                        <label class="form-check-label" for="tecnica3">
+                                          Regresión
+                                        </label>
+                                    </div> 
+                                    <br>
+                                    <br>
+                                    <div class="linea-horizontal"></div>
+                                    <p class="card-text"><strong>3. Seleccione el archivo a cargar:</strong></p>
+                                    <div class="botones">
+                                        <input type="file" id="file-upload" accept=".csv" onchange="handleFileSelect(event)" style="display: none;">
+                                    </div>
+                                    <p id="nombre-archivo"></p>
+                                    <button id="btn-generar-analisis" class="btn btn-primary" >Generar análisis</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="linea-horizontal"></div>
+                    <div id="tabla-datos"></div>
+                    <nav aria-label="Page navigation example" id="pagination-container" class="d-none">
+                        <ul class="pagination">
+                            <li class="page-item" id="prev-page"><a class="page-link" href="#">Anterior</a></li>
+                            <li class="page-item" id="next-page"><a class="page-link" href="#">Siguiente</a></li>
+                            <li class="page-item disabled" id="current-page"><a class="page-link" href="#"></a></li>
+                        </ul>
+                    </nav>    
+                </div>                        
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <h3>Integrantes del taller</h3>
+                    <ul>
+                        <hr> <!-- Línea horizontal -->
+                        <li>Diomedes Igua Hernandez <a href="mailto:diomedessistemas@gmail.com">diomedessistemas@gmail.com</a> | 3005591602</li>
+                        <li>Jeison Ricardo Patiño Lopez <a href="mailto:pat.jeison@gmail.com">pat.jeison@gmail.com</a> | 3219934351</li>
+                        <li>José Daniel Arismendy Tibaduiza <a href="mailto:julianpati8@gmail.com">julianpati8@gmail.com</a> | 3053654740</li>
+                        <li>Diana Bermúdez Carrillo <a href="mailto:diana.bermudez08@gmail.com">diana.bermudez08@gmail.com</a> | 3114828560</li>
+                    </ul> 
+                    <div class="mintic-talentotech">
+                        <p>MINTIC - TalentoTech 2024</p>
+                        <p>Instructor - Jose Albeiro Montes</p>
+                    </div>
+                </div>
+                
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        let totalPages = 1;
+        let csvData = [];
+
+        document.getElementById('prev-page').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                updatePaginator();
+                updateTable();
+            }
+        });
+
+        document.getElementById('next-page').addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updatePaginator();
+                updateTable();
+            }
+        });
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById('nombre-archivo').textContent = 'Archivo seleccionado: ' + file.name;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const csv = e.target.result;
+                    csvData = csv.split('\n').map(row => row.split(','));
+                    totalPages = Math.ceil((csvData.length - 1) / 20);
+                    updatePaginator();
+                    updateTable();
+                };
+                reader.readAsText(file);
+            }
+            checkAnalysisButton(); // Llamada a la función para actualizar el estado del botón
+        }
+
+        function updateTable() {
+            const table = document.createElement('table');
+            table.classList.add('table', 'table-striped');
+            const startIndex = (currentPage - 1) * 20;
+            const endIndex = Math.min(startIndex + 20, csvData.length);
+            const headers = csvData[0];
+            const dataRows = csvData.slice(startIndex, endIndex);
+            const thead = document.createElement('thead');
+            const tbody = document.createElement('tbody');
+
+            const headerRow = document.createElement('tr');
+            headers.forEach(headerText => {
+                const th = document.createElement('th');
+                th.textContent = headerText;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            dataRows.forEach(row => {
+                const tr = document.createElement('tr');
+                row.forEach(cell => {
+                    const td = document.createElement('td');
+                    td.textContent = cell;
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+
+            table.appendChild(tbody);
+
+            const tablaDatos = document.getElementById('tabla-datos');
+            tablaDatos.innerHTML = '';
+            tablaDatos.appendChild(table);
+        }
+
+        function updatePaginator() {
+            const prevPage = document.getElementById('prev-page');
+            const nextPage = document.getElementById('next-page');
+            const currentPageElement = document.getElementById('current-page');
+            prevPage.classList.toggle('disabled', currentPage === 1);
+            nextPage.classList.toggle('disabled', currentPage === totalPages);
+            currentPageElement.querySelector('a').textContent = `Página ${currentPage} de ${totalPages}`;
+            const paginationContainer = document.getElementById('pagination-container');
+            paginationContainer.classList.toggle('d-none', csvData.length === 0); // Oculta la paginación si no hay datos
+        }
+
+        // Función para mostrar u ocultar el botón de generar análisis
+        function checkAnalysisButton() {
+            const checkedTechniques = document.querySelectorAll('.tecnica:checked');
+            const btnGenerarAnalisis = document.getElementById('btn-generar-analisis');
+            const fileSelected = document.getElementById('nombre-archivo').textContent !== '';
+            if (checkedTechniques.length > 0 && fileSelected) {
+                btnGenerarAnalisis.style.display = 'block';
+            } else {
+                btnGenerarAnalisis.style.display = 'none';
+            }
+        }
+
+        // Escuchar cambios en las técnicas seleccionadas
+        const checkboxes = document.querySelectorAll('.tecnica');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', checkAnalysisButton);
+        });
+        
+        // Redirigir al dashboard al hacer clic en el botón de generar análisis
+        document.getElementById('btn-generar-analisis').addEventListener('click', () => {
+            // Llamar a la función enviarDatos() para enviar los datos antes de redireccionar
+            enviarDatos()
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+</body>
+</html>
+
